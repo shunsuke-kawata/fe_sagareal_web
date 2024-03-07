@@ -2,6 +2,12 @@
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
+import styles from "./styles.module.css";
+
+interface urlsState {
+  inurl: string | null;
+  outurl: string | null;
+}
 
 export default function Post() {
   //デフォルトは内カメラで撮影する
@@ -16,16 +22,26 @@ export default function Post() {
   });
   const webcamRef = useRef<Webcam>(null);
   const isFacingRef = useRef<boolean>(true);
+  const [inurl, setInurl] = useState<string | null>(null);
+  const [outUrl, setoutUrl] = useState<string | null>(null);
   const [url, setUrl] = useState<string | null>(null);
   const capture = React.useCallback(() => {
     var imageSrc;
     if (webcamRef.current !== null) {
       imageSrc = webcamRef.current?.getScreenshot();
+      if (isFacingRef.current === true) {
+        setInurl(imageSrc);
+      } else {
+        setoutUrl(imageSrc);
+      }
     }
 
-    if (imageSrc) {
-      setUrl(imageSrc);
-    }
+    //カメラの切り替え
+    changeCameraMode();
+
+    // if (imageSrc) {
+    //   setUrl(imageSrc);
+    // }
   }, [webcamRef]);
 
   const changeCameraMode = () => {
@@ -49,32 +65,52 @@ export default function Post() {
   };
   return (
     <>
-      <Webcam
-        audio={false}
-        height={300}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={300}
-        videoConstraints={videoConstraints}
-      />
-      <button onClick={() => changeCameraMode()}>カメラ切り替え</button>
-      <button onClick={capture}>Capture photo</button>
-      {url && (
-        <>
-          <div>
-            <button
-              onClick={() => {
-                setUrl(null);
-              }}
-            >
-              削除
-            </button>
-          </div>
-          <div>
-            <img src={url} alt="Screenshot" />
-          </div>
-        </>
-      )}
+      <h1 className={styles.title}>投稿する</h1>
+      <div className={styles.webcamDiv}>
+        <Webcam
+          audio={false}
+          height={300}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width={300}
+          videoConstraints={videoConstraints}
+        />
+      </div>
+
+      {/* <button onClick={() => changeCameraMode()}>カメラ切り替え</button> */}
+      <button onClick={capture}>撮る</button>
+      <>
+        <div>
+          <button
+            onClick={() => {
+              setUrl(null);
+            }}
+          >
+            削除
+          </button>
+          {inurl === null || outUrl === null ? (
+            <></>
+          ) : (
+            <>
+              {" "}
+              {inurl !== null ? (
+                <div>
+                  <img src={inurl} alt="incameraScreenshot" />
+                </div>
+              ) : (
+                ""
+              )}
+              {outUrl !== null ? (
+                <div>
+                  <img src={outUrl} alt="outcameraScreenshot" />
+                </div>
+              ) : (
+                ""
+              )}
+            </>
+          )}
+        </div>
+      </>
     </>
   );
 }
