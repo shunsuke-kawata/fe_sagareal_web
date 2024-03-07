@@ -1,8 +1,6 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getAuth, Auth, GoogleAuthProvider } from "firebase/auth";
-import firebase from "firebase/compat/app";
 import { getStorage, FirebaseStorage } from "firebase/storage";
-import firebaseui from "firebaseui";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,11 +16,11 @@ let auth: Auth;
 let storage: FirebaseStorage;
 
 // サーバーサイドでレンダリングするときにエラーが起きないようにするための記述
-if (typeof window !== "undefined" && !getApps().length) {
-  firebaseApp = initializeApp(firebaseConfig);
-  auth = getAuth(firebaseApp);
-  storage = getStorage(firebaseApp);
-}
+// if (typeof window !== "undefined" && !getApps().length) {
+firebaseApp = initializeApp(firebaseConfig);
+auth = getAuth(firebaseApp);
+storage = getStorage(firebaseApp);
+// }
 
 const provider = new GoogleAuthProvider();
 
