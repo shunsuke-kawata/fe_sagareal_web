@@ -42,16 +42,16 @@ export default function Post() {
     isFacingRef.current = !isFacingRef.current;
     if (isFacingRef.current === true) {
       setVideoConstraints({
-        width: 300,
-        height: 400,
+        width: 80,
+        height: 120,
         facingMode: "user",
       });
     }
     //外
     else {
       setVideoConstraints({
-        width: 300,
-        height: 400,
+        width: 80,
+        height: 120,
         facingMode: "environment",
       });
     }
