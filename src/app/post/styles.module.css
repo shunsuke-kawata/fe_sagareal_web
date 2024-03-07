@@ -7,3 +7,23 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.captureButton{
+    margin-top: 10px;
+    width:70px;
+    height: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flexImageBox{
+    width: 300px;
+    margin-top: 20px;
+    width:fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+.images{
+    width:240px;
+    height:320px;
+}

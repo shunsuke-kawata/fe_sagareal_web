@@ -3,11 +3,7 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 import styles from "./styles.module.css";
-
-interface urlsState {
-  inurl: string | null;
-  outurl: string | null;
-}
+import { buffer } from "stream/consumers";
 
 export default function Post() {
   //デフォルトは内カメラで撮影する
@@ -17,7 +13,7 @@ export default function Post() {
     facingMode: string | { exact: string };
   }>({
     width: 300,
-    height: 300,
+    height: 400,
     facingMode: "user",
   });
   const webcamRef = useRef<Webcam>(null);
@@ -35,13 +31,10 @@ export default function Post() {
         setoutUrl(imageSrc);
       }
     }
+    console.log(imageSrc);
 
     //カメラの切り替え
     changeCameraMode();
-
-    // if (imageSrc) {
-    //   setUrl(imageSrc);
-    // }
   }, [webcamRef]);
 
   const changeCameraMode = () => {
@@ -50,7 +43,7 @@ export default function Post() {
     if (isFacingRef.current === true) {
       setVideoConstraints({
         width: 300,
-        height: 300,
+        height: 400,
         facingMode: "user",
       });
     }
@@ -58,56 +51,83 @@ export default function Post() {
     else {
       setVideoConstraints({
         width: 300,
-        height: 300,
+        height: 400,
         facingMode: "environment",
       });
     }
   };
+
+  const encodeBase64 = (imageString: string) => {
+    // base64デコード
+    const blob = atob(imageString.replace(/^.*,/, ""));
+    let buffer = new Uint8Array(blob.length);
+    for (let i = 0; i < blob.length; i++) {
+      buffer[i] = blob.charCodeAt(i);
+    }
+    return buffer;
+  };
+
+  const handleUpload = (inUrl: string, outUrl: string) => {
+    if (inUrl !== null && outUrl !== null) {
+      const inImage = encodeBase64(inUrl);
+      const outImage = encodeBase64(outUrl);
+      console.log(inImage, outImage);
+    }
+  };
   return (
     <>
-      <h1 className={styles.title}>投稿する</h1>
-      <div className={styles.webcamDiv}>
-        <Webcam
-          audio={false}
-          height={300}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width={300}
-          videoConstraints={videoConstraints}
-        />
-      </div>
+      <h1 className={styles.title}>投稿画面</h1>
+      {inurl === null || outUrl === null ? (
+        <>
+          <div className={styles.webcamDiv}>
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              videoConstraints={videoConstraints}
+            />
+          </div>
+          <img
+            className={styles.captureButton}
+            onClick={capture}
+            src={"/capture_button.svg"}
+          />
+        </>
+      ) : (
+        ""
+      )}
 
-      {/* <button onClick={() => changeCameraMode()}>カメラ切り替え</button> */}
-      <button onClick={capture}>撮る</button>
       <>
         <div>
-          <button
-            onClick={() => {
-              setUrl(null);
-            }}
-          >
-            削除
-          </button>
           {inurl === null || outUrl === null ? (
             <></>
           ) : (
-            <>
-              {" "}
+            <div className={styles.flexImageBox}>
               {inurl !== null ? (
-                <div>
-                  <img src={inurl} alt="incameraScreenshot" />
-                </div>
+                <img
+                  className={styles.images}
+                  src={inurl}
+                  alt="incameraScreenshot"
+                />
               ) : (
                 ""
               )}
               {outUrl !== null ? (
-                <div>
-                  <img src={outUrl} alt="outcameraScreenshot" />
-                </div>
+                <img
+                  className={styles.images}
+                  src={outUrl}
+                  alt="outcameraScreenshot"
+                />
               ) : (
                 ""
               )}
-            </>
+
+              <input
+                type={"button"}
+                value={"アップロード"}
+                onClick={() => handleUpload(inurl, outUrl)}
+              />
+            </div>
           )}
         </div>
       </>
