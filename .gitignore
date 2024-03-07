@@ -35,6 +35,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# ignore env
+.env
 # next-pwa
 **/public/sw.js
 **/public/sw.js.map
