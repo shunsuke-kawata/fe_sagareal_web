@@ -12,8 +12,8 @@ export default function Post() {
     height: number;
     facingMode: string | { exact: string };
   }>({
-    width: 300,
-    height: 400,
+    width: 120,
+    height: 160,
     facingMode: "user",
   });
   const webcamRef = useRef<Webcam>(null);
@@ -42,16 +42,16 @@ export default function Post() {
     isFacingRef.current = !isFacingRef.current;
     if (isFacingRef.current === true) {
       setVideoConstraints({
-        width: 80,
-        height: 120,
+        width: 120,
+        height: 160,
         facingMode: "user",
       });
     }
     //外
     else {
       setVideoConstraints({
-        width: 80,
-        height: 120,
+        width: 120,
+        height: 160,
         facingMode: "environment",
       });
     }
