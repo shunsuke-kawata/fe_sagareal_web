@@ -1,0 +1,39 @@
+/* page.css */
+
+body {
+    background-color: black; /* ページ全体の背景色を黒に設定 */
+    color: white; /* ページ全体の文字色を白に設定 */
+}
+
+.page-content {
+    display: flex; /* コンテンツをフレックスボックスとして配置 */
+    flex-direction: column; /* 子要素を縦方向に並べる */
+    align-items: center; /* 子要素を中央に配置 */
+    padding: 20px; /* コンテンツと枠線の間に20pxの余白を設定 */
+}
+
+h1 {
+    margin-top: 0; /* h1要素の上部のマージンをリセット */
+}
+
+.post-button {
+    align-self: flex-end; /* 右上に配置 */
+    border: 2px solid white; /* 枠の色を白に設定 */
+    padding: 10px; /* ボタンの内側の余白を設定 */
+}
+
+.unit-post-container {
+    border: 2px solid white; /* 枠の色を白に設定 */
+    padding: 20px;
+    margin-bottom: 20px; /* 各投稿の下に余白を設定 */
+    width: 500px;
+    height: 500px;
+}
+
+.post-list {
+    display: flex; /* 子要素をフレックスボックスとして配置 */
+    flex-wrap: wrap; /* 投稿を横に並べ、折り返す */
+    justify-content: center; /* 子要素を中央に配置 */
+}
+
+/* その他の投稿のスタイルを適用する場合、.unit-post-container内のスタイルを使ってください */
