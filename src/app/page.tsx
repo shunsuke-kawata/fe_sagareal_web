@@ -75,7 +75,7 @@ export default function Home() {
     <div className="page-content">
       <h1>SagaReal.</h1>
       <div className="post-button">
-      <a href="./post/page.tsx">POST</a>
+      <a href="./post/">POST</a>
       </div>
       <PostsList />
     </div>
