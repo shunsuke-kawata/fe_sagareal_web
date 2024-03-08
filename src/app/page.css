@@ -24,16 +24,26 @@ h1 {
 
 .unit-post-container {
     border: 2px solid white; /* 枠の色を白に設定 */
-    padding: 20px;
-    margin-bottom: 20px; /* 各投稿の下に余白を設定 */
-    width: 500px;
-    height: 500px;
+    padding: 10px;
+    padding-top: 40px;
+    margin-bottom: 5px; /* 各投稿の下に余白を設定 */
+    margin-top:20px;
+    width: 900px; /* 枠の幅を200pxに設定 */
+    height: 300px; /* 枠の高さを100pxに設定 */
+    display: flex; /* 子要素をフレックスボックスとして配置 */
+    justify-content: space-between; /* 子要素を均等に配置 */
+    flex-direction: row; /* 子要素を横並びに配置 */
+    box-sizing: border-box; /* 枠線とパディングをwidthとheightに含める */
 }
+
+
+.unit-post-container div {
+    color: white; /* user_uidの文字色を白に設定 */
+}
+
 
 .post-list {
     display: flex; /* 子要素をフレックスボックスとして配置 */
     flex-wrap: wrap; /* 投稿を横に並べ、折り返す */
     justify-content: center; /* 子要素を中央に配置 */
 }
-
-/* その他の投稿のスタイルを適用する場合、.unit-post-container内のスタイルを使ってください */
