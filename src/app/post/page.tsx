@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 import styles from "./styles.module.css";
 import { buffer } from "stream/consumers";
+import { firebaseApp, storage } from "@/libs/firebaseConfig";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 export default function Post() {
   //デフォルトは内カメラで撮影する
@@ -71,7 +73,14 @@ export default function Post() {
     if (inUrl !== null && outUrl !== null) {
       const inImage = encodeBase64(inUrl);
       const outImage = encodeBase64(outUrl);
-      console.log(inImage, outImage);
+      // const storageRef = ref(storage, "some-child");
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+      const storageRef = ref(storage);
+      console.log(storageRef);
+      const uploadTask = uploadBytes(storageRef, inImage, metadata);
+      console.log(uploadTask);
     }
   };
   return (
